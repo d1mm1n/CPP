@@ -9,7 +9,7 @@ using namespace std;
 string RoadWord() {
     string word;
     ifstream file("C:\\Users\\hong\\Desktop\\words.txt"); // 파일 열기
-    srand(static_cast<unsigned>(time(nullptr))); // 매번 다른 난수를 생성
+    srand(time(NULL)); // 매번 다른 난수를 생성
 
     int n = rand() % 100 + 1; // 1~100까지의 난수를 생성
 
@@ -17,34 +17,33 @@ string RoadWord() {
     for (int i = 1; i <= n; i++) {
         getline(file, word);
     }
-    cout << word << endl;
+    //cout << word << endl;
 
     return word;
 }
 
 void GameReset(string& solution, int& chance, int& Try, char* tries, string& guess) {
     cout << "게임을 재시작 하시겠습니까? (Y/N): ";
-    char user;
-    cin >> user;
-    if (user == 'Y') {
+    char answer; // 사용자의 게임 재시작 여부 대답을 저장할 변수
+    cin >> answer;  //사용자로 부터 알파벳 입력받기
+    if (answer == 'Y') {
         solution = RoadWord(); // 단어 재생성
         chance = 7; // 기회 재생성
-        Try = 0;
-        for (int i = 0; i < 10; i++) {
+        Try = 0; //시도한 알파벳이 저장될 인덱스 번호를 정하는 변수
+        for (int i = 0; i < 8; i++) {
             tries[i] = '\0'; // 배열 초기화
         }
         guess = string(solution.length(), '-'); // guess를 '-'으로 초기화
     }
-    else if (user == 'N') exit(0); //프로그램 종료
+    else if (answer == 'N') exit(0); //프로그램 종료
 }
 
 int main() {
     char ch;
     string solution = RoadWord(); // 정답 저장
     int chance = 7; // 사용자의 횟수 제한 (7번)
-    char user; // 사용자의 게임 재시작 여부 대답을 저장할 변수
     int Try = 0; // 시도한 알파벳을 보여줄 때 반복 횟수 기준 변수
-    char tries[20] = {};
+    char tries[8] = {}; //시도한 알파벳을 저장한 배열
     string guess(solution.length(), '-'); // guess를 '-'으로 초기화
 
     do {
@@ -57,7 +56,9 @@ int main() {
 
         cout << "남은 횟수는 " << chance << "번 입니다. ";
         cout << "(시도한 알파벳:";
+        //시도한 알파벳을 출력
         for (int k = 0; k <= Try; k++) {
+            //배열안에 저장된 알파벳을 출력
             cout << tries[k] << ' ';
         }
         cout << " )" << endl;
@@ -65,17 +66,18 @@ int main() {
         cout << "\n" << "\n" << endl;
         for (int i = 0; i < solution.length(); i++) {
             if (ch == solution[i])
-                guess[i] = ch;
+                guess[i] = ch; //사용자가 입력한 알파벳 정답에 맞춰 guess를 수정
         }
-
+        //정답을 맞추었을 경우
         if (solution == guess) {
             cout << solution << endl;
             cout << "성공하였습니다!!";
-            GameReset(solution, chance, Try, tries, guess); // 게임 재시작
+            GameReset(solution, chance, Try, tries, guess); // 게임 재시작 함수호출
         }
+        //기회를 모두 사용하였을 경우
         if (chance == 0) {
-            cout << "기회를 모두 사용하였습니다! ";
-            GameReset(solution, chance, Try, tries, guess); // 게임 재시작
+            cout << "실패 입니다! 기회를 모두 사용하였습니다! ";
+            GameReset(solution, chance, Try, tries, guess); // 게임 재시작 함수호출
         }
 
     } while (true);
