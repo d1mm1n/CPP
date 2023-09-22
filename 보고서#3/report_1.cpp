@@ -25,21 +25,20 @@ public:
 };
 
 void print(Student s) {
+	cout << s.Getname() << " is crying"<<endl;
 	cout << "Name: "<<s.Getname()<<" ";
 	cout << "Marks: " << s.Getmarks() << " \n";
+	cout << s.Getname() << " is dying" << endl;
 }
 
 
 int main() {
 	Student s1;
-	Student s2("Gildong",4.5);
+	Student s2("Gildong", 4.5);
 
-	cout << s1.Getname() << " is crying" << endl;
-	cout << s2.Getname() << " is crying"<< endl;
 
 	print(s1);
 	print(s2);
 
-	cout << s1.Getname() << " is dying" << endl;
-	cout << s2.Getname() << " is dying" << endl;
+
 }
