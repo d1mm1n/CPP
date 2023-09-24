@@ -21,7 +21,9 @@ public:
 	}
 	
 	//소멸자
-	~Student();
+	~Student(){
+        cout << name << " is dying \n";
+    }
 
 	string Getname() {
 		return name;
@@ -31,10 +33,7 @@ public:
 	}
 
 };
-//소멸자
-Student ::~Student() {
-	cout << name << " is dying \n";
-}
+
 
 //복사 생성자 호출을 방지 하기 위해 참조로 매개변수를 받습니다.
 //이렇게 해야지 Student객체의 복사본을 만들지 않으며, 생성자와 소멸자가 두 번씩 호출되지 않습니다.
